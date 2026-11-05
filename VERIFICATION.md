@@ -1,13 +1,14 @@
 # Verification
 
-The checks this release passed, run 2026-11-04 22:57 UTC on Node 22.23.4, each from a clean copy of this repository's files. Generated from the run's record, not written by hand.
+The checks this release passed, run 2026-11-05 01:23 UTC on Node 22.23.4, each from a clean copy of this repository's files. Generated from the run's record, not written by hand.
 
 | Check | Result | What ran | Versions |
 |---|---|---|---|
 | `lint` | pass | Prettier, ESLint, ruff (format and lint) and shellcheck clean |  |
 | `node` | pass | 4 passed, 0 failed (live API, free sample, address and cap refusals) | @x402/fetch 2.29.0, @x402/evm 2.29.0, viem 2.57.16 |
-| `safe-trading-agent` | pass | 4 passed, 0 failed (offline policy + live trial; @blackhull/agentkit from npm, as the lockfile pins it) | @coinbase/agentkit 0.10.4, @blackhull/agentkit 0.1.1 |
+| `safe-trading-agent` | pass | 5 passed, 0 failed (offline policy + live trial; @blackhull/agentkit from npm, as the lockfile pins it) | @coinbase/agentkit 0.10.4, @blackhull/agentkit 0.1.1 |
 | `python` | pass | 4 passed (live API, free sample, address and cap refusals) | python 3.12.3, x402 2.26.0 |
+| `audit` | pass | no unreviewed high or critical advisory (npm audit for node and safe-trading-agent, pip-audit for python), as its security workflow runs them |  |
 | `curl` | pass | free sample answered; quote decoded at $0.01 |  |
 
 No test that runs in CI can spend money: free samples need no wallet, and the spend-cap tests use a fresh, never-funded key with a cap below the price.

@@ -3,3 +3,11 @@ GHSA-mrhx-c7xc-m3w5  # zod < 4.6.6: memory exhaustion on a large array sent to a
                      # Not reachable here: this example defines no zod schema, and the provider it uses has no array
                      # schema. @coinbase/agentkit (0.10.4, the latest) requires zod 3, which has no fixed release.
                      # Remove when AgentKit moves to zod 4.
+GHSA-3gc7-fjrx-p6mg  # bigint-buffer <= 1.1.5 (no fixed release exists): a buffer overflow in toBigIntLE().
+                     # Loaded at import by @coinbase/agentkit's Solana support, but toBigIntLE() is called only to
+                     # decode Solana SPL token data, and this example trades on Base only, so it is never called.
+                     # Checked 2026-11-05 by tracing the modules guard.mjs loads. Remove when AgentKit drops it.
+GHSA-qr28-fpjm-wq7f  # decode-uri-component <= 0.5.0: denial of service on crafted percent-encoding. Pulled in by
+                     # WalletConnect's query-string 7, which needs the CommonJS 0.2 line; the fix (0.5.1) is ESM-only.
+                     # Never loaded by this example (checked 2026-11-05 by tracing the modules guard.mjs loads),
+                     # which uses a viem wallet, not WalletConnect. Remove when WalletConnect moves off query-string 7.

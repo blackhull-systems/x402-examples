@@ -4,7 +4,8 @@ Before your agent buys a token, `guard.mjs` checks the token's contract through 
 [@blackhull/agentkit](https://github.com/blackhull-systems/agentkit) action provider and applies **your** policy to the
 finding codes. The policy is three lists at the top of the file:
 
-- `refuse` — never trade automatically (for example `CAN_SET_FEE`: its code contains a fee-setting function)
+- `refuse` — never trade automatically (for example `SELL_BLOCKED`: a simulated buy went through and the sale of it
+  did not; or `CAN_SET_FEE`: its code contains a fee-setting function)
 - `review` — hold until you decide (for example `CAN_MINT`, `UPGRADEABLE`)
 - `accepted` — codes from `review` you have decided this agent may live with
 

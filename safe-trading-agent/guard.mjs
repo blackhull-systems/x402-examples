@@ -19,8 +19,9 @@ process.on("unhandledRejection", (e) => {
 
 // Codes and their meanings: https://blackhullsystems.com/methodology
 const POLICY = {
-  refuse: ["NO_CONTRACT", "NOT_ERC20", "CAN_SET_FEE", "NO_POOL_FOUND", "THIN_LIQUIDITY"], // never trade these automatically
-  review: ["OWNER_ACTIVE", "CAN_MINT", "CAN_PAUSE", "CAN_BLACKLIST", "UPGRADEABLE"], // trade only if you accept these
+  // never trade these automatically: SELL_BLOCKED means a simulated buy went through and the sale of it did not
+  refuse: ["NO_CONTRACT", "NOT_ERC20", "SELL_BLOCKED", "HIGH_TAX", "CAN_SET_FEE", "NO_POOL_FOUND", "THIN_LIQUIDITY"],
+  review: ["OWNER_ACTIVE", "CAN_MINT", "CAN_PAUSE", "CAN_BLACKLIST", "UPGRADEABLE", "BUY_FAILED"], // trade only if you accept these
   accepted: [], // move codes here from `review` once you have decided they are acceptable for this agent
 };
 
