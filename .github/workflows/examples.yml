@@ -1,0 +1,72 @@
+name: examples
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1" # weekly, so a change in a client library or the API shows up here first
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - run: npm ci --no-fund --no-audit --ignore-scripts
+      - run: npm run format:check
+      - run: npm run lint
+      - run: pip install -r python/requirements-dev.txt
+      - run: ruff format --check .
+      - run: ruff check .
+      - run: shellcheck curl/*.sh
+  node:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dir: [node, safe-trading-agent]
+        node: [22, 24] # the maintained LTS lines
+    defaults:
+      run:
+        working-directory: ${{ matrix.dir }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci --no-fund --no-audit --ignore-scripts # exactly the versions in package-lock.json
+      - run: npm test
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - run: pytest -q
+  curl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: ./curl/check-token.sh | tee out.txt
+      - name: the sample answered and the quote decoded at $0.01
+        run: |
+          grep -q '"LIQUIDITY"' out.txt
+          grep -q '"usdc": 0.01' out.txt

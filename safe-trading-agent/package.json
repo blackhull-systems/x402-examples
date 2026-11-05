@@ -1,0 +1,19 @@
+{
+  "name": "blackhull-safe-trading-agent",
+  "private": true,
+  "type": "module",
+  "description": "A pre-trade guard for a Coinbase AgentKit agent, using Blackhull's token check",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node guard.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@blackhull/agentkit": "^0.1.1",
+    "@coinbase/agentkit": "^0.10.4",
+    "viem": "^2.21.0"
+  }
+}

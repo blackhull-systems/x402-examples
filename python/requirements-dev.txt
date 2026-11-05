@@ -1,0 +1,5 @@
+# What the tests and CI need on top of requirements.txt, pinned so every run uses the same tools.
+-r requirements.txt
+pytest==9.2.0
+ruff==0.17.3
+pip-audit==2.10.1

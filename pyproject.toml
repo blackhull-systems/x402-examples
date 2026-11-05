@@ -1,0 +1,10 @@
+# Lint and format settings for python/ (ruff); the example itself needs only requirements.txt.
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"python/test_*.py" = ["S101", "S603"] # tests assert, and run the example as a subprocess

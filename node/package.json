@@ -1,0 +1,19 @@
+{
+  "name": "blackhull-x402-example-node",
+  "private": true,
+  "type": "module",
+  "description": "Pay for a Blackhull token check over x402 from Node",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node check-token.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@x402/evm": "2.29.0",
+    "@x402/fetch": "2.29.0",
+    "viem": "^2.21.0"
+  }
+}
