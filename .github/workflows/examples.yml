@@ -30,6 +30,7 @@ jobs:
   node:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false # every combination reports its own result: one failure does not hide the others
       matrix:
         dir: [node, safe-trading-agent]
         node: [22, 24] # the maintained LTS lines
